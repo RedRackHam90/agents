@@ -1,21 +1,20 @@
 # BCV Start Invest Sync Skill
 
-**Goal**  
-Whenever there is a **new** "BCV Start invest" expense entry (by date), add its full Amount to the tracked total value. Only new entries — never re-process old ones.
+**Strict Rules**  
+- **Never touch Quantity** — leave it completely alone (clean whole number).
+- Only increment the **value** (Total Invested) when there is a **new** expense entry (by date).
+- Only process entries newer than last sync date.
 
-**Current State**  
-- Total value is now correctly at **CHF 21,300** (today's 300 CHF expense included).
-- Quantity adjusted to ~1.0142857 so the formula Total reflects the accumulated value.
+**How it works going forward**  
+1. Find new "BCV Start invest" expenses (Date > Last Sync).
+2. Add the full Amount to a dedicated **Total Invested** number property.
+3. Update Last Sync date.
+4. Log it.
 
-## Rules for the Task / Skill
-- Only process expenses where `Date & time` > Last Sync date.
-- Add the full Amount to the tracked total.
-- Update Last Sync to the latest processed date.
-- Log what was done.
+**One-time action needed**  
+Create a number property called **"Total Invested"** on the BCV Start Invest page (or Assets database) and set it to the current desired value (e.g. 21300). The skill will then maintain it automatically for all future entries.
 
-## How the Daily Task Should Work
-1. Check for new "BCV Start invest" expenses since last run.
-2. For each new one: add Amount to total value.
-3. Never touch old entries.
+**Current Status**  
+Quantity left at clean 1. Skill ready to only increment value on new dated entries.
 
-**Status**: Fixed. Today's entry is included. Future runs will only catch new dated entries.
+Daily Grok Task will keep the value updated cleanly without ever touching Quantity again.
